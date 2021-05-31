@@ -1,0 +1,2 @@
+.\create-vm-shell "C:\Program Files\Oracle\VirtualBox" "kmaster" "Downloads\ubuntu-20.04.2-live-server-amd64.iso"
+.\create-vm-shell "C:\Program Files\Oracle\VirtualBox" "kworker1" "Downloads\ubuntu-20.04.2-live-server-amd64.iso"
