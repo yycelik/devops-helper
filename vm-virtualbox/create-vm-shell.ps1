@@ -28,8 +28,8 @@ Write-Host $DiskPath
 # Set memory and network
 .\VBoxManage modifyvm $ServerName --ioapic on
 .\VBoxManage modifyvm $ServerName --memory 1024 --vram 128
-.\VBoxManage modifyvm $ServerName --nic1 nat
-.\VBoxManage modifyvm $ServerName --nic2 hostonly
+# Network Types [none|null|nat|bridged|intnet|hostonly|generic|natnetwork]
+.\VBoxManage modifyvm $ServerName --nic1 bridged
 
 # Create Disk and connect Debian Iso
 .\VBoxManage createhd --filename $DiskPath --size 10000 --format VDI
@@ -40,8 +40,8 @@ Write-Host $DiskPath
 .\VBoxManage modifyvm $ServerName --boot1 dvd --boot2 disk --boot3 none --boot4 none
 
 # Enable RDP
-.\VBoxManage modifyvm $ServerName --vrde on
-.\VBoxManage modifyvm $ServerName --vrdemulticon on --vrdeport 10001
+#.\VBoxManage modifyvm $ServerName --vrde on
+#.\VBoxManage modifyvm $ServerName --vrdemulticon on --vrdeport 10001
 
 # Start the VM
 #VBoxHeadless --startvm $ServerName
