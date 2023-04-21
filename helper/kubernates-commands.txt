@@ -1,0 +1,73 @@
+#################################### kubectl examples ##############################
+kubectl logs {podname} -n {namespace}
+kubectl logs -f {podname}
+kubectl get deployment {deployment-name} -o yaml > {file-name}
+kubectl delete -f {file-name-deployment}.yaml
+kubectl delete -f {file-name-service}.yaml
+kubectl apply -f {file-name-deployment}.yaml
+kubectl apply -f {file-name-service}.yaml
+kubectl get pod
+
+kubectl get services
+kubectl get endpoints
+
+kubectl get networkpolicy
+kubectl describe networkpolicy {networkpolicy-name}
+
+kubectl get ippool
+kubectl describe ippool {ippool-name}
+
+kubectl exec -it {pod-name} -n {namespace} -- bash
+
+
+
+#################################### Shell Demo #################################### 
+kubectl apply -f https://k8s.io/examples/application/shell-demo.yaml
+kubectl get pod shell-demo
+kubectl exec --stdin --tty shell-demo -- /bin/bash
+
+
+
+#################################### Deploy Pod & Run Shell ######################## 
+kubectl run -it foo --image={image-name} --restart=Never -- /bin/bash
+
+
+
+#################################### Network Policy ################################
+kubectl apply -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-all-ingress
+spec:
+  podSelector: {}
+  ingress:
+  - {}
+  policyTypes:
+  - Ingress
+EOF
+
+kubectl apply -f - <<EOF
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-all-egress
+spec:
+  podSelector: {}
+  egress:
+  - {}
+  policyTypes:
+  - Egress
+EOF
+
+
+
+
+kubectl get no,po,svc -o wide
+#NAME                STATUS   ROLES           AGE     VERSION   INTERNAL-IP     EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+#node/kmaster.com    Ready    control-plane   5d18h   v1.26.3   192.168.0.240   <none>        Ubuntu 22.04.2 LTS   5.15.0-67-generic   containerd://1.6.19
+#node/kworker1.com   Ready    <none>          5d11h   v1.26.3   192.168.0.241   <none>        Ubuntu 22.04.2 LTS   5.15.0-67-generic   containerd://1.6.19
+#node/kworker2.com   Ready    <none>          5d11h   v1.26.3   192.168.0.242   <none>        Ubuntu 22.04.2 LTS   5.15.0-67-generic   containerd://1.6.19
+
+#NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE     SELECTOR
+#service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   5d18h   <none>
