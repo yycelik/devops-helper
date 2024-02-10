@@ -71,3 +71,9 @@ kubectl get no,po,svc -o wide
 
 #NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE     SELECTOR
 #service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   5d18h   <none>
+
+
+
+
+#remove terminating namespace
+NS=`kubectl get ns |grep Terminating | awk 'NR==1 {print $1}'` && kubectl get namespace "$NS" -o json   | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/"   | kubectl replace --raw /api/v1/namespaces/$NS/finalize -f -
