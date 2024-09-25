@@ -1,3 +1,7 @@
+#################################### longhorn volue fix ##############################
+#after attach longhorn volue to the node
+fsck.ext4 /dev/longhorn/pvc-bcf03eb7-020c-4420-927a-aebc46972a53
+
 #################################### kubectl examples ##############################
 kubectl logs {podname} -n {namespace}
 kubectl logs -f {podname}
